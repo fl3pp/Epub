@@ -3,6 +3,10 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
+variables:
+  configuration: debug
+  platform: x64
+
 trigger:
 - master
 
@@ -10,10 +14,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: PowerShell@2
+  inputs:
+    filePath: '$(Build.Repository.LocalPath)\build\scripts\build.ps1'
+    arguments: '$true "$(Build.BinariesDirectory)"'
