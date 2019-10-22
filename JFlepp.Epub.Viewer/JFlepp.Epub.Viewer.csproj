@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <CefSharpTargetDir>cefsharp</CefSharpTargetDir>
+    <ApplicationIcon>JFlepp.Epub.ico</ApplicationIcon>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CefSharp.Wpf" Version="75.1.142" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JFlepp.Epub\JFlepp.Epub.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JFlepp.Epub\JFlepp.Epub.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\OpfManifestExample" />
+    <None Remove="Resources\OpfManifestExtended" />
+    <None Remove="Resources\OpfMetadataExample1" />
+    <None Remove="Resources\OpfMetadataExample2" />
+    <None Remove="Resources\TocNcxExample2" />
+  </ItemGroup>
+
+</Project>

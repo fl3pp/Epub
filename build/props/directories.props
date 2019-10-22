@@ -1,0 +1,11 @@
+<Project>
+
+  <PropertyGroup>
+    <OutPath>$(RepositoryPath)out\</OutPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <BaseIntermediateOutputPath>$(OutPath)obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <OutputPath>$(OutPath)bin\</OutputPath>
+    <PackageOutputPath>$(OutPath)packages</PackageOutputPath> 
+  </PropertyGroup>
+
+</Project>

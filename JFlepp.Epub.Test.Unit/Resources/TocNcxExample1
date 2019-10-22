@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
+	<head>
+		<meta name="cover" content="cover"/>
+		<meta name="dtb:uid" content="1000000000006"/>
+	</head>
+	<docTitle>
+		<text>Test Book</text>
+	</docTitle>
+	<navMap>
+		<navPoint id="00000" playOrder="1">
+			<navLabel>
+				<text>Preface</text>
+			</navLabel>
+			<content src="preface01.html"/>
+			<navPoint id="00001" playOrder="2">
+				<navLabel>
+					<text>This book is written for</text>
+				</navLabel>
+				<content src="preface01.html#this_book_is_written_for"/>
+			</navPoint>
+			<navPoint id="00002" playOrder="3">
+				<navLabel>
+					<text>About This Book</text>
+				</navLabel>
+				<content src="preface01.html#about_this_book"/>
+			</navPoint>
+			<navPoint id="00003" playOrder="4">
+				<navLabel>
+					<text>Conventions</text>
+				</navLabel>
+				<content src="preface01.html#conventions"/>				
+				<navPoint id="00004" playOrder="5">
+					<navLabel>
+						<text>text</text>
+					</navLabel>
+					<content src="preface01.html#conventions_text"/>
+				</navPoint>
+			</navPoint>
+		</navPoint>
+		<navPoint id="00008" playOrder="6">
+			<navLabel>
+				<text>1. Beginning</text>
+			</navLabel>
+			<content src="ch01.html#beginning"/>
+		</navPoint>
+		<navPoint id="00009" playOrder="7">
+			<navLabel>
+				<text>Index</text>
+			</navLabel>
+			<content src="ix01.html"/>
+		</navPoint>
+	</navMap>
+</ncx>

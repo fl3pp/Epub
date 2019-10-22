@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<package xmlns="http://www.idpf.org/2007/opf" version="2.0" unique-identifier="bookid">
+  <manifest>
+    <item id="ncxtoc" media-type="application/x-dtbncx+xml" href="toc.ncx"/>
+    <item media-type="text/css" id="css" href="style.css"/>
+    <item id="cover" href="cover.html" media-type="application/xhtml+xml"/>
+    <item id="epub.embedded.font.1" href="CustomFont.otf" media-type="font/opentype"/>
+    <item id="id2558953" href="index.html" media-type="application/xhtml+xml"/>
+    <item id="cover-image" href="cover.jpg" media-type="image/jpeg"/>
+    <item id="id01" href="ch1.html" media-type="application/xhtml+xml"/>
+  </manifest>
+</package>

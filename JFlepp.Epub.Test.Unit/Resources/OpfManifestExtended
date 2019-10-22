@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<package xmlns="http://www.idpf.org/2007/opf" version="2.0" unique-identifier="bookid">
+  <manifest>
+    <item id="identifier" href="reference" properties="properties" media-type="application/x-dtbncx+xml" />
+    <item href="reference" id="identifier"  media-type="other"/>
+    <item id="identifier" properties="properties" />
+    <item href="reference" properties="properties" media-type="application/xhtml+xml"/>
+  </manifest>
+</package>

@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JFlepp.Epub\JFlepp.Epub.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Books\*.xml" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Update="Books\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<package xmlns="http://www.idpf.org/2007/opf" version="2.0" unique-identifier="bookid">
+  <metadata>
+    <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/" id="bookid">urn:isbn:1111111111111</dc:identifier>
+    <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Some Book's Title</dc:title>
+    <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">Copyright © 1111 </dc:rights>
+    <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Some Press</dc:publisher>
+    <dc:subject xmlns:dc="http://purl.org/dc/elements/1.1/">Book / Reading / General</dc:subject>
+    <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">2000-10-10</dc:date>
+    <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">Some text &lt;strong&gt;Im strong!&lt;/strong&gt; and some other text</dc:description>
+    <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf" opf:file-as="Anon ymous">Anon ymous</dc:creator>
+    <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">en</dc:language>
+    <meta name="cover" content="cover-image"/>
+  </metadata>
+</package>
