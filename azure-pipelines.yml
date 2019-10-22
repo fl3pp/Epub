@@ -15,6 +15,27 @@ pool:
 
 steps:
 - task: PowerShell@2
+  name: "Build"
   inputs:
     filePath: '$(Build.Repository.LocalPath)/build/scripts/Build.ps1'
     arguments: '$true "$(Build.BinariesDirectory)"'
+
+- task: PowerShell@2
+  name: "Test"
+  inputs:
+    filePath: '$(Build.Repository.LocalPath)/build/scripts/Test.ps1'
+    arguments: '$true "$(Build.BinariesDirectory)"'
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish Coverage'
+  inputs:
+    codeCoverageTool: Cobertura
+    summaryFileLocation: '$(Build.BinariesDirectory)/testresults/unittest-coverage.cobertura.xml'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'VSTest'
+    testResultsFiles: '*.trx'
+    searchFolder: '$(Build.BinariesDirectory)/testresults/'
+    mergeTestResults: true
+
