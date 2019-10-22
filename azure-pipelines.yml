@@ -26,16 +26,16 @@ steps:
     filePath: '$(Build.Repository.LocalPath)/build/scripts/Test.ps1'
     arguments: '$true "$(Build.BinariesDirectory)"'
 
-- task: PublishCodeCoverageResults@1
-  displayName: 'Publish Coverage'
-  inputs:
-    codeCoverageTool: Cobertura
-    summaryFileLocation: '$(Build.BinariesDirectory)/testresults/unittest-coverage.cobertura.xml'
-
 - task: PublishTestResults@2
+  displayName: "Publish Test Results"
   inputs:
     testResultsFormat: 'VSTest'
     testResultsFiles: '*.trx'
     searchFolder: '$(Build.BinariesDirectory)/testresults/'
     mergeTestResults: true
 
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish Coverage'
+  inputs:
+    codeCoverageTool: Cobertura
+    summaryFileLocation: '$(Build.BinariesDirectory)/testresults/unittest-coverage.cobertura.xml'
