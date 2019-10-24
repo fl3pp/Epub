@@ -17,7 +17,15 @@ namespace JFlepp.Epub.Processing
         public string? Creator { get; }
         public string? Rights { get; }
 
-        public MetaData(string? identifier, string? title, string? language, string? publisher, string? description, string? date, string? creator, string? rights)
+        public MetaData(
+            string? identifier,
+            string? title,
+            string? language,
+            string? publisher,
+            string? description,
+            string? date,
+            string? creator,
+            string? rights)
         {
             Identifier = identifier;
             Title = title;

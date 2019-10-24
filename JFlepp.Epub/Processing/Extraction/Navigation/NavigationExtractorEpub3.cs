@@ -34,7 +34,7 @@ namespace JFlepp.Epub.Processing
         private string GetXHtmlTocPath(StructureFiles structureFiles)
         {
             var xHtmlTocRelativePath = manifestItems.Single(
-                i => OpfXmlNames.NavPropertiesAttributeValue.EqualsIgnoreCase(i.Properties)).Href!;
+                i => OpfXmlNames.NavPropertiesAttributeValue.EqualsIgnoreCaseWithNull(i.Properties)).Href!;
             return EpubPathHelper.ExpandPath(
                 EpubPathHelper.GetDirectoryName(structureFiles.OpfPath), xHtmlTocRelativePath);
         }
@@ -46,7 +46,7 @@ namespace JFlepp.Epub.Processing
                     element.Name.Equals(XmlNamespaces.XHtml + XHtmlTocXmlNames.NavElementName) &&
                     element.Attributes().Any(attribute =>
                         attribute.Name.Equals(XmlNamespaces.Epub + XHtmlTocXmlNames.EpubTypeAttributeName) &&
-                        attribute.Value.EqualsIgnoreCase(XHtmlTocXmlNames.TocEpubTypeAttributeValue)))
+                        attribute.Value.EqualsIgnoreCaseWithNull(XHtmlTocXmlNames.TocEpubTypeAttributeValue)))
                 .Elements().Single(e => e.Name.Equals(XmlNamespaces.XHtml + XHtmlTocXmlNames.OrderedListElementName));
         }
 
@@ -71,7 +71,7 @@ namespace JFlepp.Epub.Processing
             var order = navigationOrderProcessor.GetOrder(listItem);
 
             var fileFullPath = EpubPathHelper.ExpandPath(basePath, filePath);
-            var file = files.Single(f => f.Path.EqualsIgnoreCase(fileFullPath));
+            var file = files.Single(f => f.Path.EqualsIgnoreCaseWithNull(fileFullPath));
 
             var childOrderedList = listItem.Elements()
                 .Cast<XElement?>().SingleOrDefault(

@@ -49,12 +49,12 @@ namespace JFlepp.Epub.Processing
         {
             return element
                 .DescendantsAndSelf()
-                .Single(e => e.Name.LocalName.EqualsIgnoreCase(rootElement));
+                .Single(e => e.Name.LocalName.EqualsIgnoreCaseWithNull(rootElement));
         }
 
         private bool NeedsToBeRemoved(XElement element)
         {
-            return !allowedElements.Any(e => e.EqualsIgnoreCase(element.Name.LocalName))
+            return !allowedElements.Any(e => e.EqualsIgnoreCaseWithNull(element.Name.LocalName))
                 && !skipNode(element);
         }
 

@@ -40,7 +40,7 @@ namespace JFlepp.Epub.Processing
         public INavigationExtractor CreateNavigationExtractor(IEnumerable<ManifestItem> manifestItems)
         {
             return manifestItems.Any(
-                item => OpfXmlNames.NavPropertiesAttributeValue.EqualsIgnoreCase(item.Properties)) 
+                item => OpfXmlNames.NavPropertiesAttributeValue.EqualsIgnoreCaseWithNull(item.Properties)) 
                 ? new NavigationExtractorEpub3(zip, manifestItems) 
                 : epub2NavigationExtractor;
         }
