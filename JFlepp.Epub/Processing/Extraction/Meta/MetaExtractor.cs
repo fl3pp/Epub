@@ -27,7 +27,7 @@ namespace JFlepp.Epub.Processing
                 GetPropertyValueOrNull(metaData, OpfXmlNames.RightsElementName));
         }
 
-        private string? GetPropertyValueOrNull(XElement metaData, string propertyName)
+        private static string? GetPropertyValueOrNull(XElement metaData, string propertyName)
         {
             var elements = metaData.Elements()
                 .Where(element => element.Name.Equals(XmlNamespaces.OpfMetaElements + propertyName));

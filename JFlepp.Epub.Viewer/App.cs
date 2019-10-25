@@ -17,8 +17,10 @@ namespace JFlepp.Epub
             var path = args.ElementAtOrDefault(0);
             if (path == null)
             {
-                var dialog = new Microsoft.Win32.OpenFileDialog();
-                dialog.Filter = "EPub (*.epub)|*.epub";
+                var dialog = new Microsoft.Win32.OpenFileDialog
+                {
+                    Filter = "EPub (*.epub)|*.epub"
+                };
                 if (dialog.ShowDialog() == true)
                     path = dialog.FileName;
                 else
@@ -41,7 +43,7 @@ namespace JFlepp.Epub
             static Assembly? LoadFromCefSharpFolder(object? sender, ResolveEventArgs? args)
             {
                 var folderPath = Path.GetDirectoryName(typeof(App).Assembly.Location)! + "/cefsharp";
-                string assemblyPath = Path.Combine(folderPath, new AssemblyName(args!.Name!).Name + ".dll");
+                var assemblyPath = Path.Combine(folderPath, new AssemblyName(args!.Name!).Name + ".dll");
                 if (!System.IO.File.Exists(assemblyPath)) return null;
                 return Assembly.LoadFrom(assemblyPath);
             }

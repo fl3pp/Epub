@@ -20,9 +20,9 @@ namespace JFlepp.Epub.Processing
             var rootFile = rootFiles
                 .Elements()
                 .Where(element => element.Name.LocalName.EqualsIgnoreCaseWithNull(ContainerXmlNames.RootFileElementName))
-                .Where(e => ContainerXmlNames.OpfMediaType
+                .Single(e => ContainerXmlNames.OpfMediaType
                     .EqualsIgnoreCaseWithNull(e.GetAttributeValueOrNull(ContainerXmlNames.MediaTypeAttributeName)))
-                .Single();
+;
 
             return rootFile.GetAttributeValueOrNull(ContainerXmlNames.FullPathAttributeName)!;
         }

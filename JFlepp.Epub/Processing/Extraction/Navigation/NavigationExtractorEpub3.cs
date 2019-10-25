@@ -39,7 +39,7 @@ namespace JFlepp.Epub.Processing
                 EpubPathHelper.GetDirectoryName(structureFiles.OpfPath), xHtmlTocRelativePath);
         }
 
-        private XElement GetRootOrderedList(XDocument document)
+        private static XElement GetRootOrderedList(XDocument document)
         {
             return document
                 .Descendants().Single(element =>

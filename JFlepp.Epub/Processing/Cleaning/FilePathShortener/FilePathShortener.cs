@@ -22,7 +22,7 @@ namespace JFlepp.Epub.Processing
             builder.Files = replacements.Values;
         }
 
-        private string FindLongestCommonPath(IEnumerable<string> paths)
+        private static string FindLongestCommonPath(IEnumerable<string> paths)
         {
             return new string(
                 paths.First().Substring(0, paths.Min(s => s.Length))

@@ -44,12 +44,12 @@ namespace JFlepp.Epub
                 e => e.Name, e => e.Content, StringComparer.OrdinalIgnoreCase));
         }
 
-        private string GetFileNameFromEntry(ZipArchiveEntry entry)
+        private static string GetFileNameFromEntry(ZipArchiveEntry entry)
         {
             return entry.FullName;
         }
 
-        private async Task<byte[]> GetContentFromEntry(ZipArchiveEntry entry)
+        private async static Task<byte[]> GetContentFromEntry(ZipArchiveEntry entry)
         {
             using var fileStream = entry.Open();
             using var memoryStream = new MemoryStream();

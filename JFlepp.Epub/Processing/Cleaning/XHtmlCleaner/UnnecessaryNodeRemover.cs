@@ -58,7 +58,7 @@ namespace JFlepp.Epub.Processing
                 && !skipNode(element);
         }
 
-        private void RemoveElement(XElement element)
+        private static void RemoveElement(XElement element)
         {
             element.ReplaceWith(element.Nodes());
         }
