@@ -11,7 +11,7 @@ namespace JFlepp.Epub
     {
         private static XNamespace xNamespace = "http://JFlepp.Epub/Book/meta/xml/";
 
-        private const string rootElementName = "Book";
+        private const string rootElementName = nameof(Book);
 
         public static string MetaToXml(this Book book)
         {

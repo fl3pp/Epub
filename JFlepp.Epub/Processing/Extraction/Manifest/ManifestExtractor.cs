@@ -24,7 +24,7 @@ namespace JFlepp.Epub.Processing
                 .Select(CreateFromXElement);
         }
 
-        private ManifestItem CreateFromXElement(XElement e)
+        private static ManifestItem CreateFromXElement(XElement e)
         {
             return new ManifestItem(
                 e.GetAttributeValueOrNull(OpfXmlNames.IdAttributeName),

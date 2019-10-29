@@ -18,7 +18,7 @@ namespace JFlepp.Epub
 
             #pragma warning disable CA2000 // From Project Maintainer Example
             var settings = new CefSettings();
-            settings.RegisterScheme(new CefCustomScheme()
+            settings.RegisterScheme(new CefCustomScheme
             {
                 SchemeName = EpubResourceHandlerFactory.SchemeName,
                 SchemeHandlerFactory = new EpubResourceHandlerFactory(book),

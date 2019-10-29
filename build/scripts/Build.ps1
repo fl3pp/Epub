@@ -8,7 +8,7 @@ $buildDirectory = "$repositoryRoot\out"
 $nuget = "C:\Users\Jann Flepp\bin\nuget.exe";
 
 Write-Host "`r`n------------- Removing old artifacts -------------`r`n"
-Remove-Item $buildDirectory -Recurse -Force -Verbose
+Remove-Item $buildDirectory -Recurse -Force -Verbose -ErrorAction Continue
 
 Write-Host "`r`n------------- Restoring tools -------------`r`n"
 dotnet "tool" "install" "dotnet-reportgenerator-globaltool" "--tool-path" "$buildDirectory\tools"

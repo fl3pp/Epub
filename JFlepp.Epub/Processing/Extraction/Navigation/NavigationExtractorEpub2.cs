@@ -45,7 +45,7 @@ namespace JFlepp.Epub.Processing
             var elementId = SrcTextSplitter.GetElementId(contentText);
 
             var fileFullPath = EpubPathHelper.ExpandPath(basePath, filePath);
-            var file = files.Single(f => f.Path.EqualsIgnoreCase(fileFullPath));
+            var file = files.Single(f => f.Path.EqualsIgnoreCaseWithNull(fileFullPath));
 
             var order = orderProcessor.GetOrder(element);
 

@@ -17,10 +17,12 @@ namespace JFlepp.Epub
 
         private TreeViewItem CreateTreeViewItemFromNavigationPoint(NavigationPoint point)
         {
-            var item = new TreeViewItem();
-            item.Header = point.Title;
-            item.DataContext = point;
-            
+            var item = new TreeViewItem
+            {
+                Header = point.Title,
+                DataContext = point
+            };
+
             foreach (var child in point.Children)
             {
                 item.Items.Add(CreateTreeViewItemFromNavigationPoint(child));

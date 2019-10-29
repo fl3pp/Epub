@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Xml.Linq;
 
 namespace JFlepp.Epub.Processing
@@ -18,7 +14,7 @@ namespace JFlepp.Epub.Processing
         {
             var root = opfDoc.Root;
             var metaData = root.Elements().Single(
-                element => element.Name.Equals(XmlNamespaces.Opf +  OpfXmlNames.MetaDataElementName));
+                element => element.Name.Equals(XmlNamespaces.Opf + OpfXmlNames.MetaDataElementName));
 
             return new MetaData(
                 GetPropertyValueOrNull(metaData, OpfXmlNames.IdentifierElementName),
@@ -31,7 +27,7 @@ namespace JFlepp.Epub.Processing
                 GetPropertyValueOrNull(metaData, OpfXmlNames.RightsElementName));
         }
 
-        private string? GetPropertyValueOrNull(XElement metaData, string propertyName)
+        private static string? GetPropertyValueOrNull(XElement metaData, string propertyName)
         {
             var elements = metaData.Elements()
                 .Where(element => element.Name.Equals(XmlNamespaces.OpfMetaElements + propertyName));

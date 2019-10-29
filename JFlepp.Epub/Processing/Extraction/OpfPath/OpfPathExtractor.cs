@@ -15,14 +15,14 @@ namespace JFlepp.Epub.Processing
             var rootElement = containerXml.Root;
 
             var rootFiles = rootElement.Elements()
-                .Single(element => element.Name.LocalName.EqualsIgnoreCase(ContainerXmlNames.RootFilesElementName));
+                .Single(element => element.Name.LocalName.EqualsIgnoreCaseWithNull(ContainerXmlNames.RootFilesElementName));
 
             var rootFile = rootFiles
                 .Elements()
-                .Where(element => element.Name.LocalName.EqualsIgnoreCase(ContainerXmlNames.RootFileElementName))
-                .Where(e => ContainerXmlNames.OpfMediaType
-                    .EqualsIgnoreCase(e.GetAttributeValueOrNull(ContainerXmlNames.MediaTypeAttributeName)))
-                .Single();
+                .Where(element => element.Name.LocalName.EqualsIgnoreCaseWithNull(ContainerXmlNames.RootFileElementName))
+                .Single(e => ContainerXmlNames.OpfMediaType
+                    .EqualsIgnoreCaseWithNull(e.GetAttributeValueOrNull(ContainerXmlNames.MediaTypeAttributeName)))
+;
 
             return rootFile.GetAttributeValueOrNull(ContainerXmlNames.FullPathAttributeName)!;
         }
