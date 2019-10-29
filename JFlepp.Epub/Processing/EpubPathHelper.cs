@@ -15,13 +15,13 @@ namespace JFlepp.Epub
         {
             if (string.IsNullOrEmpty(path)) return path;
 
-            var parts = path.Split(directorySeparator);
+            var parts = path.SplitAndRemoveEmptyEntries(directorySeparator);
 
             if (parts.Length <= 1)
             {
                 return path.First() == directorySeparator ? directorySeparator.ToString() : string.Empty;
             }
-                
+
             return parts
                 .Take(parts.Length - 1)
                 .JoinToString(directorySeparator.ToString());

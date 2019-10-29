@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace JFlepp.Epub
 {
@@ -25,6 +26,8 @@ namespace JFlepp.Epub
             ContentType = contentType;
             Content = content;
         }
+
+        public static File Empty { get; } = new File(string.Empty, string.Empty, ContentType.Unknown, Array.Empty<byte>());
 
         public override string ToString() => Path;
 

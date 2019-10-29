@@ -1,58 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace JFlepp.Epub
+namespace JFlepp.Epub.Xml
 {
-    public static class XmlBookExtensions
+    internal sealed class BookToXmlConverter
     {
         private static XNamespace xNamespace = "http://JFlepp.Epub/Book/meta/xml/";
+        private const char pluralSuffix = 's';
 
-        private const string rootElementName = nameof(Book);
-
-        public static string MetaToXml(this Book book)
+        public static XDocument BookToXml(Book book)
         {
-            if (book is null) throw new ArgumentNullException(nameof(book));
-
-            var rootElement = new XElement(xNamespace + rootElementName);
-            var xDocument = new XDocument(rootElement);
-
-            AddChildren(rootElement, CreatePropertyElements(book));
-            CreateAndAddElementAndAddChildren(rootElement, xNamespace + nameof(book.NavigationPoints),
-                book.NavigationPoints.Select(CreateNavigationPointElementRecursive));
-            CreateAndAddElementAndAddChildren(rootElement, xNamespace + nameof(book.Files),
-                book.Files.Select(CreateFileElement));
-
-            return xDocument.ToString();
+            var rootElement = BookMetaToXml(book);
+            rootElement.Add(FilesToXml(book.Files));
+            rootElement.Add(NavigationPointsToXml(book.NavigationPoints));
+            return new XDocument(rootElement);;
         }
 
-        private static void CreateAndAddElementAndAddChildren(
-            XElement root, XName elementName, IEnumerable<XElement> children)
+        public static XElement BookMetaToXml(Book book)
         {
-            var element = new XElement(elementName);
-            foreach (var child in children) element.Add(child);
-            root.Add(element);
+            return new XElement(xNamespace + nameof(Book), new[] 
+            { 
+                new XElement(xNamespace + nameof(book.Title), book.Title),
+                new XElement(xNamespace + nameof(book.Author), book.Author),
+                new XElement(xNamespace + nameof(book.Description), book.Description),
+                new XElement(xNamespace + nameof(book.DatePublished), book.DatePublished),
+                new XElement(xNamespace + nameof(book.Publisher), book.Publisher),
+                new XElement(xNamespace + nameof(book.Language), book.Language),
+            });
         }
 
-        private static void AddChildren(XElement root, IEnumerable<XElement> children)
+        public static XElement FilesToXml(IEnumerable<File> files)
         {
-            foreach (var child in children) root.Add(child);
+            return new XElement(xNamespace + (nameof(File) + pluralSuffix),
+                files.Select(FileToXml).ToArray());
         }
 
-        private static IEnumerable<XElement> CreatePropertyElements(Book book)
-        {
-            yield return new XElement(xNamespace + nameof(book.Title), book.Title);
-            yield return new XElement(xNamespace + nameof(book.Author), book.Author);
-            yield return new XElement(xNamespace + nameof(book.Description), book.Description);
-            yield return new XElement(xNamespace + nameof(book.DatePublished), book.DatePublished);
-            yield return new XElement(xNamespace + nameof(book.Publisher), book.Publisher);
-            yield return new XElement(xNamespace + nameof(book.Language), book.Language);
-        }
-
-        private static XElement CreateFileElement(File file)
+        public static XElement FileToXml(File file)
         {
             return new XElement(xNamespace + nameof(File),
                 new XElement(xNamespace + nameof(file.Name), file.Name),
@@ -61,15 +45,35 @@ namespace JFlepp.Epub
                 new XElement(xNamespace + nameof(file.Content) + "Hash", file.Content.GetSHA256Hash()));
         }
 
-        private static XElement CreateNavigationPointElementRecursive(NavigationPoint current)
+        public static XElement NavigationPointsToXml(IEnumerable<NavigationPoint> navigationPoints)
+        {
+            return new XElement(xNamespace + (nameof(NavigationPoint) + pluralSuffix),
+                navigationPoints.Select(NavigationPointToXml).ToArray());
+        }
+
+        public static XElement NavigationPointToXml(NavigationPoint navigationPoint)
         {
             return new XElement(
                 xNamespace + nameof(NavigationPoint),
-                new XElement(xNamespace + nameof(current.Title), current.Title),
-                new XElement(xNamespace + nameof(current.File), current.File.ToString()),
-                new XElement(xNamespace + nameof(current.ElementId), current.ElementId),
-                new XElement(xNamespace + nameof(current.Order), current.Order),
-                new XElement(xNamespace + nameof(current.Children), current.Children.Select(CreateNavigationPointElementRecursive)));
+                new XElement(xNamespace + nameof(navigationPoint.Title),
+                    navigationPoint.Title),
+                new XElement(xNamespace + nameof(navigationPoint.File),
+                    navigationPoint.File.ToString()),
+                new XElement(xNamespace + nameof(navigationPoint.ElementId),
+                    navigationPoint.ElementId),
+                new XElement(xNamespace + nameof(navigationPoint.Order),
+                    navigationPoint.Order),
+                NavigationPointsToXml(navigationPoint.Children));
         }
+    }
+
+    public static class BookToXmlExtensions
+    {
+        public static XDocument ToXml(this Book book) { Ensure.NotNull(book, nameof(book)); return BookToXmlConverter.BookToXml(book); }
+        public static XElement MetaToXml(this Book book) { Ensure.NotNull(book, nameof(book)); return BookToXmlConverter.BookMetaToXml(book); }
+        public static XElement ToXml(this IEnumerable<File> files) { Ensure.NotNull(files, nameof(files)); return BookToXmlConverter.FilesToXml(files); }
+        public static XElement ToXml(this File file) { Ensure.NotNull(file, nameof(file)); return BookToXmlConverter.FileToXml(file); }
+        public static XElement ToXml(this IEnumerable<NavigationPoint> navigationPoints) { Ensure.NotNull(navigationPoints, nameof(navigationPoints)); return BookToXmlConverter.NavigationPointsToXml(navigationPoints); }
+        public static XElement ToXml(this NavigationPoint navigationPoint) { Ensure.NotNull(navigationPoint, nameof(navigationPoint)); return BookToXmlConverter.NavigationPointToXml(navigationPoint); }
     }
 }

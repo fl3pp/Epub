@@ -1,10 +1,11 @@
 <Query Kind="Statements">
-  <Reference Relative="..\..\..\BuildIntegrationTestXml.linq">C:\dev\JFlepp.JFlepp.Epub\binaries\bin\JFlepp.JFlepp.Epub\JFlepp.JFlepp.Epub.dll</Reference>
-  <Namespace>JFlepp.JFlepp.Epub</Namespace>
+  <Reference Relative="..\..\BuildIntegrationTestXml.linq">C:\dev\JFlepp.Epub\out\bin\JFlepp.Epub.dll</Reference>
+  <Namespace>JFlepp.Epub</Namespace>
+  <Namespace>JFlepp.Epub.Xml</Namespace>
   <Namespace>System.Threading.Tasks</Namespace>
 </Query>
 
-const string baseDirectory = @"C:\dev\JFlepp.JFlepp.Epub\JFlepp.JFlepp.Epub.Test.Integration\Books\";
+const string baseDirectory = @"C:\dev\JFlepp.Epub\JFlepp.Epub.Test.Integration\Books\";
 
 foreach (var epub in new DirectoryInfo(baseDirectory).GetFiles("*.epub"))
 {
@@ -15,6 +16,6 @@ foreach (var epub in new DirectoryInfo(baseDirectory).GetFiles("*.epub"))
 	using (var stream = epub.OpenRead())
 	{
 		var book = await EPubReader.ReadFromStream(stream);
-		System.IO.File.WriteAllText(xmlFilePath, book.MetaToXml());
+		System.IO.File.WriteAllText(xmlFilePath, book.ToXml().ToString());
 	}
 }
