@@ -1,17 +1,17 @@
 <Project>
 	
-  <PropertyGroup>
-    <RepositoryPath>$(MSBuildThisFileDirectory)</RepositoryPath>
+	<PropertyGroup>
+		<RepositoryPath>$(MSBuildThisFileDirectory)</RepositoryPath>
 	<BuildPropertiesDirectory>$(RepositoryPath)build\props\</BuildPropertiesDirectory>
-  </PropertyGroup>
+	</PropertyGroup>
 	
-  <Import Project="$(BuildPropertiesDirectory)common.props" />
-  <Import Project="$(BuildPropertiesDirectory)directories.props" />
-   
-  <Import Condition="$(IsTestProject) != true" Project="$(BuildPropertiesDirectory)nullable.props" />
-  <Import Condition="$(IsTestProject) != true" Project="$(BuildPropertiesDirectory)internalsvisibleto.props" />
-  <Import Condition="$(IsTestProject) != true" Project="$(BuildPropertiesDirectory)analyzers.props" />
+	<Import Project="$(BuildPropertiesDirectory)common.props" />
+	<Import Project="$(BuildPropertiesDirectory)directories.props" />
+	 
+	<Import Condition="$(IsTestProject) != true" Project="$(BuildPropertiesDirectory)nullable.props" />
+	<Import Condition="$(IsTestProject) != true" Project="$(BuildPropertiesDirectory)internalsvisibleto.props" />
+	<Import Condition="$(IsTestProject) != true" Project="$(BuildPropertiesDirectory)analyzers.props" />
 
-  <Import Condition="$(IsTestProject) == true" Project="$(BuildPropertiesDirectory)test-packages.props" />
-  
+	<Import Condition="$(IsTestProject) == true" Project="$(BuildPropertiesDirectory)test-packages.props" />
+	
 </Project>

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JFlepp.Epub
 {
@@ -57,11 +55,11 @@ namespace JFlepp.Epub
 
         public static string Append(string basePath, string otherPath)
         {
-            return 
-                basePath + 
+            return
+                basePath +
                 (basePath.Last() == directorySeparator
-                    ? string.Empty  
-                    : directorySeparator.ToString()) + 
+                    ? string.Empty
+                    : directorySeparator.ToString()) +
                 otherPath;
         }
     }
