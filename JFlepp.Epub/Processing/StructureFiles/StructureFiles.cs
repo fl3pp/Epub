@@ -25,7 +25,7 @@ namespace JFlepp.Epub.Processing
             ContainerDoc = container;
         }
 
-        public StructureFiles WithPathStart(Func<string,string> trim)
+        public StructureFiles WithAdjustedPaths(Func<string,string> trim)
         {
             return new StructureFiles(
                 trim(OpfPath), OpfDoc, trim(NcxPath), NcxDoc, ContainerDoc);

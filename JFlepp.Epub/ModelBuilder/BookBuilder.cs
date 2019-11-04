@@ -31,14 +31,12 @@ namespace JFlepp.Epub.Processing
 
         public void AdjustNavigationPoints(Func<NavigationPoint, NavigationPoint> func)
         {
-            NavigationPoints = NavigationPoints.Select(p => AdjustNavigationPointsRecursive(p, func)).ToArray();
-        }
+            NavigationPoint AdjustNavigationPointsRecursive(NavigationPoint point, Func<NavigationPoint, NavigationPoint> func)
+            {
+                return func(point).WithChildren(point.Children.Select(child => AdjustNavigationPointsRecursive(child, func)));
+            }
 
-        private NavigationPoint AdjustNavigationPointsRecursive(
-            NavigationPoint point, Func<NavigationPoint, NavigationPoint> func)
-        {
-            var newPoint = func(point);
-            return newPoint.WithChildren(point.Children.Select(child => AdjustNavigationPointsRecursive(child, func)));
+            NavigationPoints = NavigationPoints.Select(p => AdjustNavigationPointsRecursive(p, func)).ToArray();
         }
 
         private static string GetNewValueOrUnknown(string? newValue, string propertyName)

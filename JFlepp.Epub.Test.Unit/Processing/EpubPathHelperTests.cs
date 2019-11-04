@@ -21,13 +21,23 @@ namespace JFlepp.Epub.Test.Unit
         }
 
         [TestMethod]
-        public void GetDirectoryName_PathIsRoot_ReturnsEmpty()
+        public void GetDirectoryName_PathIsRootWithoutPrecedingSeparator_ReturnsEmpty()
         {
             const string fullPath = "one.html";
 
             var result = EpubPathHelper.GetDirectoryName(fullPath);
 
             Assert.AreEqual(string.Empty, result);
+        }
+
+        [TestMethod]
+        public void GetDirectoryName_PathIsRootWithPrecedingSeparator_ReturnsSeparator()
+        {
+            const string fullPath = "/one.html";
+
+            var result = EpubPathHelper.GetDirectoryName(fullPath);
+
+            Assert.AreEqual("/", result);
         }
 
         [TestMethod]

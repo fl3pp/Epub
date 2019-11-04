@@ -30,6 +30,48 @@ namespace JFlepp.Epub.Test.Unit
         }
 
         [TestMethod]
+        public void WithFile_OtherFile_ReturnsNewNavigationWithCopiedValuesAndNewFile()
+        {
+            var title = "name";
+            var oldFile = TestItemFactory.CreateFileFromString("test1.xhtml");
+            var newFile = TestItemFactory.CreateFileFromString("test2.xhtml");
+            string elementId = null;
+            var order = 0;
+            var children = Array.Empty<NavigationPoint>();
+            var navigationPoint = new NavigationPoint(
+                title, oldFile, elementId, order, children);
+
+            var result = navigationPoint.WithFile(newFile);
+
+            Assert.AreEqual(title, result.Title);
+            Assert.AreEqual(newFile, result.File);
+            Assert.AreEqual(elementId, result.ElementId);
+            Assert.AreEqual(children, result.Children);
+            Assert.AreEqual(order, result.Order);
+        }
+
+        [TestMethod]
+        public void WithChildren_OtherChildren_ReturnsNewNavigationWithCopiedValuesAndNewChildren()
+        {
+            var title = "name";
+            var file = TestItemFactory.CreateFileFromString("test.xhtml");
+            string elementId = null;
+            var order = 0;
+            var oldChildren = Array.Empty<NavigationPoint>();
+            var newChildren = Array.Empty<NavigationPoint>();
+            var navigationPoint = new NavigationPoint(
+                title, file, elementId, order, oldChildren);
+
+            var result = navigationPoint.WithChildren(newChildren);
+
+            Assert.AreEqual(title, result.Title);
+            Assert.AreEqual(file, result.File);
+            Assert.AreEqual(elementId, result.ElementId);
+            Assert.AreEqual(newChildren, result.Children);
+            Assert.AreEqual(order, result.Order);
+        }
+
+        [TestMethod]
         public void ToString_WithIdInFile_ReturnsStringRepresentationWithId()
         {
             var name = "Chapter 1";

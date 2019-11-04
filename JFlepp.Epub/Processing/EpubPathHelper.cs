@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JFlepp.Epub
 {
@@ -15,13 +13,13 @@ namespace JFlepp.Epub
         {
             if (string.IsNullOrEmpty(path)) return path;
 
-            var parts = path.Split(directorySeparator);
+            var parts = path.SplitAndRemoveEmptyEntries(directorySeparator);
 
             if (parts.Length <= 1)
             {
                 return path.First() == directorySeparator ? directorySeparator.ToString() : string.Empty;
             }
-                
+
             return parts
                 .Take(parts.Length - 1)
                 .JoinToString(directorySeparator.ToString());
@@ -57,11 +55,11 @@ namespace JFlepp.Epub
 
         public static string Append(string basePath, string otherPath)
         {
-            return 
-                basePath + 
+            return
+                basePath +
                 (basePath.Last() == directorySeparator
-                    ? string.Empty  
-                    : directorySeparator.ToString()) + 
+                    ? string.Empty
+                    : directorySeparator.ToString()) +
                 otherPath;
         }
     }
