@@ -21,7 +21,7 @@ namespace JFlepp.Epub.Test.Unit.Processing
             var ncxDoc = XDocument.Parse("<Ncx />");
             var containerDoc = XDocument.Parse("<Container />");
 
-            var testee = new StructureFiles(
+            var testee = new EpubStructure(
                 opfPath, opfDoc, ncxPath, ncxDoc, containerDoc);
 
             Assert.AreEqual(opfPath, testee.OpfPath);
@@ -37,7 +37,7 @@ namespace JFlepp.Epub.Test.Unit.Processing
             var opfPath = "/opf";
             var ncxPath = "/ncx";
             var doc = XDocument.Parse("<Opf />");
-            var testee = new StructureFiles(
+            var testee = new EpubStructure(
                 opfPath, doc, ncxPath, doc, doc);
 
             var result = testee.WithAdjustedPaths(p => p.Substring(1));

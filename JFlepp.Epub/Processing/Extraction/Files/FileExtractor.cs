@@ -6,26 +6,20 @@ namespace JFlepp.Epub.Processing
 {
     internal interface IFileExtractor
     {
-        Task<File[]> ExtractFiles(IEnumerable<ManifestItem> manifestItems);
+        Task<File[]> ExtractFiles(
+            XmlStructureFile opf, IEnumerable<ManifestItem> manifestItems, IZip zip);
     }
 
     internal sealed class FileExtractor : IFileExtractor
     {
-        private readonly string opfDirectory;
-        private readonly IZip zip;
-
-        public FileExtractor(string opfDirectory, IZip zip)
+        public Task<File[]> ExtractFiles(
+            XmlStructureFile opf, IEnumerable<ManifestItem> manifestItems, IZip zip)
         {
-            this.opfDirectory = opfDirectory;
-            this.zip = zip;
+            return Task.WhenAll(manifestItems.Select(
+                item => CreateFileFromManifestItem(item, opf.Path, zip)));
         }
 
-        public Task<File[]> ExtractFiles(IEnumerable<ManifestItem> manifestItems)
-        {
-            return Task.WhenAll(manifestItems.Select(CreateFileFromManifestItem));
-        }
-
-        private Task<File> CreateFileFromManifestItem(ManifestItem item)
+        private Task<File> CreateFileFromManifestItem(ManifestItem item, string opfDirectory, IZip zip)
         {
             var path = EpubPathHelper.ExpandPath(opfDirectory, item.Href!);
             var fileName = EpubPathHelper.GetFileName(item.Href!);

@@ -18,7 +18,7 @@ namespace JFlepp.Epub.Test.Unit.Processing
             var fixture = new TestFixture();
             fixture.ZipDic["toc.xhtml"] = Encoding.UTF8.GetBytes(TestResources.TocXHtmlExample1);
             fixture.ManifestItems.Add(new ManifestItem(null, "toc.xhtml", "nav", ContentType.XHtml));
-            var structureFiles = new StructureFiles("/", null, string.Empty, null, null);
+            var structureFiles = new EpubStructure("/", null, string.Empty, null, null);
             var preface1File = TestItemFactory.CreateFileFromString("preface01.html");
             var ch1File = TestItemFactory.CreateFileFromString("ch01.html");
             var indexFile = TestItemFactory.CreateFileFromString("index.html");
@@ -52,7 +52,7 @@ namespace JFlepp.Epub.Test.Unit.Processing
             fixture.ManifestItems.Add(new ManifestItem(null, "toc.xhtml", "nav", ContentType.XHtml));
             var coverFile = TestItemFactory.CreateFileFromString("cover.xhtml");
             var introFile = TestItemFactory.CreateFileFromString("intro.xhtml");
-            var structureFiles = new StructureFiles(string.Empty, null, string.Empty, null, null);
+            var structureFiles = new EpubStructure(string.Empty, null, string.Empty, null, null);
             var testee = fixture.CreateTestee();
 
             var result = await testee.ExtractNavigationPoints(structureFiles, new[] { coverFile, introFile });
@@ -74,10 +74,10 @@ namespace JFlepp.Epub.Test.Unit.Processing
             public IDictionary<string, byte[]> ZipDic { get; } = new Dictionary<string, byte[]>(StringComparer.OrdinalIgnoreCase);
             public IList<ManifestItem> ManifestItems { get; } = new List<ManifestItem>();
 
-            public NavigationExtractorEpub3 CreateTestee()
+            public XHtmlNavigationExtractor CreateTestee()
             {
                 var zip = new DictionaryZipWrapper(ZipDic);
-                return new NavigationExtractorEpub3(zip, ManifestItems);
+                return new XHtmlNavigationExtractor(zip, ManifestItems);
             }
         }
     }

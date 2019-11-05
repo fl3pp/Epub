@@ -48,7 +48,7 @@ namespace JFlepp.Epub.Test.Unit.Processing
 
             var result = testee.CreateNavigationExtractor(new ManifestItem[0]);
 
-            Assert.IsInstanceOfType(result, typeof(NavigationExtractorEpub2));
+            Assert.IsInstanceOfType(result, typeof(NcxNavigationExtractor));
         }
 
         [TestMethod]
@@ -58,7 +58,7 @@ namespace JFlepp.Epub.Test.Unit.Processing
 
             var result = testee.CreateNavigationExtractor(new[] { new ManifestItem(null, null, "nav", ContentType.Unknown) });
 
-            Assert.IsInstanceOfType(result, typeof(NavigationExtractorEpub3));
+            Assert.IsInstanceOfType(result, typeof(XHtmlNavigationExtractor));
         }
     }
 }

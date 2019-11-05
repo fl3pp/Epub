@@ -13,11 +13,11 @@ namespace JFlepp.Epub.Test.Unit.Processing
         {
             var docString = TestResources.TocNcxExample1;
             var xDoc = XDocument.Parse(docString);
-            var processingContext = new StructureFiles(string.Empty, null, string.Empty, xDoc, null);
+            var processingContext = new EpubStructure(string.Empty, null, string.Empty, xDoc, null);
             var preface1File = TestItemFactory.CreateFileFromString("preface01.html");
             var ch1File = TestItemFactory.CreateFileFromString("ch01.html");
             var indexFile = TestItemFactory.CreateFileFromString("ix01.html");
-            var testee = new NavigationExtractorEpub2();
+            var testee = new NcxNavigationExtractor();
 
             var result = await testee
                 .ExtractNavigationPoints(processingContext, new[] { preface1File, ch1File, indexFile }).ConfigureAwait(false);
@@ -45,9 +45,9 @@ namespace JFlepp.Epub.Test.Unit.Processing
         {
             var docString = TestResources.TocNcxExample2;
             var xDoc = XDocument.Parse(docString);
-            var processingContext = new StructureFiles(string.Empty, null, string.Empty, xDoc, null);
+            var processingContext = new EpubStructure(string.Empty, null, string.Empty, xDoc, null);
             var preface1File = TestItemFactory.CreateFileFromString("preface01.html");
-            var testee = new NavigationExtractorEpub2();
+            var testee = new NcxNavigationExtractor();
 
             var result = await testee
                 .ExtractNavigationPoints(processingContext, new[] { preface1File }).ConfigureAwait(false);

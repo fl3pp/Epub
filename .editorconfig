@@ -17,3 +17,9 @@ dotnet_diagnostic.CC0031.severity = none
 
 # CC0022: Should dispose object
 dotnet_diagnostic.CC0022.severity = none
+
+# IDE0055: Fix formatting
+dotnet_diagnostic.IDE0055.severity = none
+
+# CA1303: Do not pass literals as localized parameters
+dotnet_diagnostic.CA1303.severity = none

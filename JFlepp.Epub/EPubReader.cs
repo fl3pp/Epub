@@ -10,6 +10,27 @@ namespace JFlepp.Epub
 {
     public static class EPubReader
     {
+        private static EpubFactory CreateFactory()
+        {
+            var manifestExtractor = new ManifestExtractor();
+            return new EpubFactory(
+                new IOCompressionZipReader(),
+                new EpubStructureFactory(
+                    new OpfPathExtractor(), manifestExtractor),
+                new ModelBuilderFactory(
+                    manifestExtractor,
+                    new MetaExtractor(),
+                    new FileExtractor(),
+                    new UniversalNavigationExtractor(
+                        manifestExtractor,
+                        new NcxLoader(),
+                        new NcxNavigationExtractor(),
+                        new XHtmlTocLoader(),
+                        new XHtmlNavigationExtractor())),
+                new BookCleaner(
+                    new FilePathShortener()));
+        }
+
         public async static Task<Book> ReadFromFile(string filePath, EpubReadingOptions options = 0)
         {
             using (var stream = System.IO.File.OpenRead(filePath))
@@ -18,38 +39,9 @@ namespace JFlepp.Epub
             }
         }
 
-        public async static Task<Book> ReadFromStream(Stream stream, EpubReadingOptions options = 0)
+        public static Task<Book> ReadFromStream(Stream stream, EpubReadingOptions options = 0)
         {
-            var zip = await new IOCompressionZipReader().GetZipAsync(stream).ConfigureAwait(false);
-            var extractorFactory = new ExtractorFactory(zip);
-            var cleanerFactory = new CleanerImplementationsFactory();
-
-            var structureFiles = await new StructureFilesFactory(extractorFactory)
-                .CreateStructureFilesAsync(zip).ConfigureAwait(false);
-            var manifestItems = extractorFactory
-                .CreateManifestExtractor()
-                .ExtractManifestItems(structureFiles.OpfDoc);
-            var meta = extractorFactory
-                .CreateMetaExtractor()
-                .ExtractMeta(structureFiles.OpfDoc);
-            IEnumerable<File> files = await extractorFactory
-                .CreateFileExtractor(structureFiles.OpfPath)
-                .ExtractFiles(manifestItems).ConfigureAwait(false);
-            var navigationPoints = await extractorFactory
-                .CreateNavigationExtractor(manifestItems)
-                .ExtractNavigationPoints(structureFiles, files).ConfigureAwait(false);
-
-            var builder = new BookBuilder();
-            builder.ReadFromMeta(meta);
-            builder.NavigationPoints = navigationPoints.ToList();
-            builder.Files = files.ToList();
-
-            if (options.HasFlag(EpubReadingOptions.ShortenPaths))
-            {
-                cleanerFactory.CreateFilePathShortener().ShortenFilePaths(builder);
-            }
-
-            return builder.ToBook();
+            return CreateFactory().ReadBookAsync(stream, options);
         }
     }
 }

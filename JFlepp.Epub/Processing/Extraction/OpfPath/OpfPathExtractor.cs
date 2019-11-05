@@ -5,14 +5,14 @@ namespace JFlepp.Epub.Processing
 {
     internal interface IOpfPathExtractor
     {
-        string ExtractOpfPath(XDocument containerXml);
+        string ExtractOpfPath(XmlStructureFile container);
     }
 
     internal sealed class OpfPathExtractor : IOpfPathExtractor
     {
-        public string ExtractOpfPath(XDocument containerXml)
+        public string ExtractOpfPath(XmlStructureFile container)
         {
-            var rootElement = containerXml.Root;
+            var rootElement = container.Doc.Root;
 
             var rootFiles = rootElement.Elements()
                 .Single(element => element.Name.LocalName.EqualsIgnoreCaseWithNull(ContainerXmlNames.RootFilesElementName));

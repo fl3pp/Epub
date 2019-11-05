@@ -10,7 +10,7 @@ namespace JFlepp.Epub
 {
     public interface IZipReader
     {
-        Task<IZip> GetZipAsync(Stream file);
+        Task<IZip> GetZipAsync(Stream content);
     }
 
     internal sealed class IOCompressionZipReader : IZipReader
@@ -21,9 +21,9 @@ namespace JFlepp.Epub
             return GetZipAsync(stream);
         }
 
-        public async Task<IZip> GetZipAsync(Stream file)
+        public async Task<IZip> GetZipAsync(Stream content)
         {
-            using var zip = new ZipArchive(file);
+            using var zip = new ZipArchive(content);
 
             var kvpTasks = zip.Entries.Select(async e => new
             {

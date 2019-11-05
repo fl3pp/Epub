@@ -6,19 +6,18 @@ using System.Xml.Linq;
 
 namespace JFlepp.Epub.Processing
 {
-    internal sealed class NavigationExtractorEpub2 : INavigationExtractor
+    internal sealed class NcxNavigationExtractor : IFileBasedNavigationExtractor
     {
-        public Task<IEnumerable<NavigationPoint>> ExtractNavigationPoints(
-            StructureFiles context, IEnumerable<File> files)
+        public IEnumerable<NavigationPoint> ExtractNavigationPoints(XmlStructureFile ncx, IEnumerable<File> files)
         {
-            var root = context.NcxDoc.Root;
-            var basePath = EpubPathHelper.GetDirectoryName(context.NcxPath);
+            var root = ncx.Doc.Root;
+            var basePath = EpubPathHelper.GetDirectoryName(ncx.Path);
 
             var navMap = root.Elements()
                 .Single(element => element.Name.Equals(XmlNamespaces.Ncx + NcxXmlNames.NavMapElementName));
             var orderProcessor = NavigationOrderProcessor.Create(navMap);
 
-            return Task.FromResult(FilterAndSelectChildNavPoints(navMap, orderProcessor, basePath, files));
+            return FilterAndSelectChildNavPoints(navMap, orderProcessor, basePath, files);
         }
 
         private IEnumerable<NavigationPoint> FilterAndSelectChildNavPoints(
