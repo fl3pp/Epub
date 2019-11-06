@@ -1,6 +1,7 @@
 ﻿using JFlepp.Epub.Processing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace JFlepp.Epub.Test.Unit.Processing
@@ -9,13 +10,13 @@ namespace JFlepp.Epub.Test.Unit.Processing
     public class ManifestExtractorTests
     {
         [TestMethod]
-        public void ExtractManifestItems_WithExampleOpf_ReturnsManifestItems()
+        public async Task ExtractManifestItems_WithExampleOpf_ReturnsManifestItems()
         {
             var opf = TestResources.OpfManifestExample;
-            var xDoc = XDocument.Parse(opf);
+            var doc = await XmlStructureFile.LoadFromTextAsync("/test.opf", opf);
             var testee = new ManifestExtractor();
 
-            var result = testee.ExtractManifestItems(xDoc).ToArray();
+            var result = testee.ExtractManifestItems(doc).ToArray();
 
             var expected = new[]
             {
@@ -31,13 +32,13 @@ namespace JFlepp.Epub.Test.Unit.Processing
         }
 
         [TestMethod]
-        public void ExtractManifestItems_WithExtendedOpf_ReturnsManifestItems()
+        public async Task ExtractManifestItems_WithExtendedOpf_ReturnsManifestItems()
         {
             var opf = TestResources.OpfManifestExtended;
-            var xDoc = XDocument.Parse(opf);
+            var doc = await XmlStructureFile.LoadFromTextAsync("/test.opf", opf);
             var testee = new ManifestExtractor();
 
-            var result = testee.ExtractManifestItems(xDoc).ToArray();
+            var result = testee.ExtractManifestItems(doc).ToArray();
 
             var expected = new[]
             {

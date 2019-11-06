@@ -15,7 +15,7 @@ namespace JFlepp.Epub.Processing
             var navigationOrderProcessor = NavigationOrderProcessor.Create();
             var navElement = GetRootOrderedList(xHtmlToc.Doc);
             return ProcessOrderedListRecursive(
-                navElement, navigationOrderProcessor, EpubPathHelper.GetDirectoryName(xHtmlToc.Path), files);
+                navElement, navigationOrderProcessor, EpubPathHelper.GetDirectoryName(xHtmlToc.Path), files).ToArray();
         }
 
         private static XElement GetRootOrderedList(XDocument document)

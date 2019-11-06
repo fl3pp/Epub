@@ -1,5 +1,6 @@
 ﻿using JFlepp.Epub.Processing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace JFlepp.Epub.Test.Unit.Processing
@@ -8,13 +9,12 @@ namespace JFlepp.Epub.Test.Unit.Processing
     public class OpfPathExtractorTests
     {
         [TestMethod]
-        public void ExtractOpfPath_WithContainerXml_ReturnsOpfPath()
+        public async Task ExtractOpfPath_WithContainerXml_ReturnsOpfPath()
         {
             var resource = TestResources.ContainerXmlSimple;
-            var xDoc = XDocument.Parse(resource);
             var testee = new OpfPathExtractor();
 
-            var result = testee.ExtractOpfPath(xDoc);
+            var result = testee.ExtractOpfPath(await XmlStructureFile.LoadFromTextAsync("test.container", resource));
 
             Assert.AreEqual("OEBPS/content.opf", result);
         }

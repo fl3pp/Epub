@@ -10,22 +10,18 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace JFlepp.Epub.Test.Unit.Processing
 {
     [TestClass]
-    public class NavigationExtractorEpub3Tests
+    public class XHtmlNavigationExtractorTests
     {
         [TestMethod]
         public async Task ExtractNavigationPoints_TocXHtmlExample1_ExtractsNavigation()
         {
-            var fixture = new TestFixture();
-            fixture.ZipDic["toc.xhtml"] = Encoding.UTF8.GetBytes(TestResources.TocXHtmlExample1);
-            fixture.ManifestItems.Add(new ManifestItem(null, "toc.xhtml", "nav", ContentType.XHtml));
-            var structureFiles = new EpubStructure("/", null, string.Empty, null, null);
+            var doc = await XmlStructureFile.LoadFromTextAsync(string.Empty, TestResources.TocXHtmlExample1);
             var preface1File = TestItemFactory.CreateFileFromString("preface01.html");
             var ch1File = TestItemFactory.CreateFileFromString("ch01.html");
             var indexFile = TestItemFactory.CreateFileFromString("index.html");
-            var testee = fixture.CreateTestee();
+            var testee = new XHtmlNavigationExtractor();
 
-            var result = await testee
-                .ExtractNavigationPoints(structureFiles, new[] { preface1File, ch1File, indexFile }).ConfigureAwait(false); 
+            var result = testee.ExtractNavigationPoints(doc, new[] { preface1File, ch1File, indexFile });
 
             var expected = new[]
             {
@@ -47,15 +43,12 @@ namespace JFlepp.Epub.Test.Unit.Processing
         [TestMethod]
         public async Task ExtractNavigationPoints_TocXHtmlExample2_ExtractsNavigation()
         {
-            var fixture = new TestFixture();
-            fixture.ZipDic["toc.xhtml"] = Encoding.UTF8.GetBytes(TestResources.TocXHtmlExample2);
-            fixture.ManifestItems.Add(new ManifestItem(null, "toc.xhtml", "nav", ContentType.XHtml));
+            var doc = await XmlStructureFile.LoadFromTextAsync(string.Empty, TestResources.TocXHtmlExample2);
             var coverFile = TestItemFactory.CreateFileFromString("cover.xhtml");
             var introFile = TestItemFactory.CreateFileFromString("intro.xhtml");
-            var structureFiles = new EpubStructure(string.Empty, null, string.Empty, null, null);
-            var testee = fixture.CreateTestee();
+            var testee = new XHtmlNavigationExtractor();
 
-            var result = await testee.ExtractNavigationPoints(structureFiles, new[] { coverFile, introFile });
+            var result = testee.ExtractNavigationPoints(doc, new[] { coverFile, introFile });
 
             var expected = new[]
             {
@@ -67,18 +60,5 @@ namespace JFlepp.Epub.Test.Unit.Processing
             };
             CustomAsserts.AssertNavigationPointsAreEqual(result, expected);
         } 
-
-        private class TestFixture
-        {
-
-            public IDictionary<string, byte[]> ZipDic { get; } = new Dictionary<string, byte[]>(StringComparer.OrdinalIgnoreCase);
-            public IList<ManifestItem> ManifestItems { get; } = new List<ManifestItem>();
-
-            public XHtmlNavigationExtractor CreateTestee()
-            {
-                var zip = new DictionaryZipWrapper(ZipDic);
-                return new XHtmlNavigationExtractor(zip, ManifestItems);
-            }
-        }
     }
 }

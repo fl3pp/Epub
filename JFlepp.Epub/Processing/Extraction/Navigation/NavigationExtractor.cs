@@ -47,9 +47,9 @@ namespace JFlepp.Epub.Processing
         {
             var manifestItems = manifestExtractor.ExtractManifestItems(structure.Opf);
             return manifestItems.Any(
-                item => OpfXmlNames.NavPropertiesAttributeValue.EqualsIgnoreCaseWithNull(item.Properties)) 
-                ? ExtractEpub2NavigationPoints(structure, manifestItems, files)
-                : ExtractEpub3NavigationPoints(structure, manifestItems, files);
+                item => OpfXmlNames.NavPropertiesAttributeValue.EqualsIgnoreCaseWithNull(item.Properties))
+                ? ExtractEpub3NavigationPoints(structure, manifestItems, files)
+                : ExtractEpub2NavigationPoints(structure, manifestItems, files);
         }
 
         public async Task<IEnumerable<NavigationPoint>> ExtractEpub2NavigationPoints(

@@ -26,6 +26,12 @@ namespace JFlepp.Epub.Processing
             return LoadFromStreamAsync(path, stream);
         }
 
+        public static Task<XmlStructureFile> LoadFromTextAsync(string path, string content)
+        {
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(content));
+            return LoadFromStreamAsync(path, stream);
+        }
+
         public static Task<XmlStructureFile> LoadFromZipAsync(string path, IZip zip)
         {
             using var stream = zip.GetFileStream(path);

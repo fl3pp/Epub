@@ -16,7 +16,7 @@ namespace JFlepp.Epub.Processing
             XmlStructureFile opf, IEnumerable<ManifestItem> manifestItems, IZip zip)
         {
             return Task.WhenAll(manifestItems.Select(
-                item => CreateFileFromManifestItem(item, opf.Path, zip)));
+                item => CreateFileFromManifestItem(item, EpubPathHelper.GetDirectoryName(opf.Path), zip)));
         }
 
         private Task<File> CreateFileFromManifestItem(ManifestItem item, string opfDirectory, IZip zip)
