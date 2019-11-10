@@ -5,14 +5,14 @@ namespace JFlepp.Epub.Processing
 {
     internal interface IMetaExtractor
     {
-        MetaData ExtractMeta(XDocument opfDoc);
+        MetaData ExtractMeta(XmlStructureFile opf);
     }
 
     internal sealed class MetaExtractor : IMetaExtractor
     {
-        public MetaData ExtractMeta(XDocument opfDoc)
+        public MetaData ExtractMeta(XmlStructureFile opf)
         {
-            var root = opfDoc.Root;
+            var root = opf.Doc.Root;
             var metaData = root.Elements().Single(
                 element => element.Name.Equals(XmlNamespaces.Opf + OpfXmlNames.MetaDataElementName));
 

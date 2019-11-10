@@ -7,36 +7,15 @@ using System.Xml.Linq;
 
 namespace JFlepp.Epub.Processing
 {
-    internal sealed class NavigationExtractorEpub3 : INavigationExtractor
+    internal sealed class XHtmlNavigationExtractor : IFileBasedNavigationExtractor
     {
-        private readonly IZip zip;
-        private readonly IEnumerable<ManifestItem> manifestItems;
-
-        public NavigationExtractorEpub3(
-            IZip zip,
-            IEnumerable<ManifestItem> manifestItems)
+        public IEnumerable<NavigationPoint> ExtractNavigationPoints(
+            XmlStructureFile xHtmlToc, IEnumerable<File> files)
         {
-            this.zip = zip;
-            this.manifestItems = manifestItems;
-        }
-
-        public async Task<IEnumerable<NavigationPoint>> ExtractNavigationPoints(
-            StructureFiles structureFiles, IEnumerable<File> files)
-        {
-            var xHtmlTocPath = GetXHtmlTocPath(structureFiles);
-            var xDoc = await zip.ParseXmlFromPathAsync(xHtmlTocPath).ConfigureAwait(false);
             var navigationOrderProcessor = NavigationOrderProcessor.Create();
-            var navElement = GetRootOrderedList(xDoc);
+            var navElement = GetRootOrderedList(xHtmlToc.Doc);
             return ProcessOrderedListRecursive(
-                navElement, navigationOrderProcessor, EpubPathHelper.GetDirectoryName(xHtmlTocPath), files).ToArray();
-        }
-
-        private string GetXHtmlTocPath(StructureFiles structureFiles)
-        {
-            var xHtmlTocRelativePath = manifestItems.Single(
-                i => OpfXmlNames.NavPropertiesAttributeValue.EqualsIgnoreCaseWithNull(i.Properties)).Href!;
-            return EpubPathHelper.ExpandPath(
-                EpubPathHelper.GetDirectoryName(structureFiles.OpfPath), xHtmlTocRelativePath);
+                navElement, navigationOrderProcessor, EpubPathHelper.GetDirectoryName(xHtmlToc.Path), files).ToArray();
         }
 
         private static XElement GetRootOrderedList(XDocument document)

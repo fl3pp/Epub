@@ -9,14 +9,14 @@ namespace JFlepp.Epub.Processing
 {
     internal interface IManifestExtractor
     {
-        IEnumerable<ManifestItem> ExtractManifestItems(XDocument opfDoc);
+        IEnumerable<ManifestItem> ExtractManifestItems(XmlStructureFile opf);
     }
 
     internal sealed class ManifestExtractor : IManifestExtractor
     {
-        public IEnumerable<ManifestItem> ExtractManifestItems(XDocument opfDoc)
+        public IEnumerable<ManifestItem> ExtractManifestItems(XmlStructureFile opf)
         {
-            var rootItem = opfDoc.Root;
+            var rootItem = opf.Doc.Root;
             var manifestItem = rootItem
                 .Elements().Single(e => e.Name.Equals(XmlNamespaces.Opf + OpfXmlNames.ManifestElementName));
             return manifestItem

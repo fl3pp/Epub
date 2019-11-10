@@ -13,13 +13,13 @@ namespace JFlepp.Epub.Test.Unit.Processing
     public class MetaExtractorTests
     {
         [TestMethod]
-        public void ExtractMeta_ExampleOpf1_ExtractsMetaData()
+        public async Task ExtractMeta_ExampleOpf1_ExtractsMetaData()
         {
             var docString = TestResources.OpfMetadataExample1;
-            var xDoc = XDocument.Parse(docString);
+            var doc = await XmlStructureFile.LoadFromTextAsync("/test.opf", docString);
             var testee = new MetaExtractor();
 
-            var result = testee.ExtractMeta(xDoc);
+            var result = testee.ExtractMeta(doc);
 
             Assert.AreEqual("urn:isbn:1111111111111", result.Identifier);
             Assert.AreEqual("Some Book's Title", result.Title);
@@ -33,13 +33,13 @@ namespace JFlepp.Epub.Test.Unit.Processing
 
 
         [TestMethod]
-        public void ExtractMeta_ExampleOpf2_ExtractsMetaData()
+        public async Task ExtractMeta_ExampleOpf2_ExtractsMetaData()
         {
             var docString = TestResources.OpfMetadataExample2;
-            var xDoc = XDocument.Parse(docString);
+            var doc = await XmlStructureFile.LoadFromTextAsync("/test.opf", docString);
             var testee = new MetaExtractor();
 
-            var result = testee.ExtractMeta(xDoc);
+            var result = testee.ExtractMeta(doc);
 
             Assert.AreEqual("1111111111111", result.Identifier);
             Assert.AreEqual("Some Book's Title", result.Title);
@@ -52,13 +52,13 @@ namespace JFlepp.Epub.Test.Unit.Processing
         }
 
         [TestMethod]
-        public void ExtractMeta_TitleSetTwice_ReturnsFirst()
+        public async Task ExtractMeta_TitleSetTwice_ReturnsFirst()
         {
             var docString = $@"<package xmlns=""{XmlNamespaces.Opf}"" xmlns:dc=""{XmlNamespaces.OpfMetaElements}""><metadata><dc:title>test1</dc:title><dc:title>test2</dc:title></metadata></package>";
-            var xDoc = XDocument.Parse(docString);
+            var doc = await XmlStructureFile.LoadFromTextAsync("/test.opf", docString);
             var testee = new MetaExtractor();
 
-            var result = testee.ExtractMeta(xDoc).Title;
+            var result = testee.ExtractMeta(doc).Title;
 
             Assert.AreEqual("test1", result);
         }

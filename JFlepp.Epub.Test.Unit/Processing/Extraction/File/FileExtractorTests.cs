@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JFlepp.Epub.Test.Unit.Processing.Extraction.File
+namespace JFlepp.Epub.Test.Unit.Processing
 {
     [TestClass]
     public class FileExtractorTests
@@ -21,11 +21,11 @@ namespace JFlepp.Epub.Test.Unit.Processing.Extraction.File
             {
                 new ManifestItem(string.Empty, "chapter1.xml", string.Empty, ContentType.Unknown),
             };
-            var rootDirectory = "content/";
+            var opf = await XmlStructureFile.LoadFromTextAsync("content/opf.opf", "<Doc />");
             zip.Setup(x => x.GetFileContent("content/chapter1.xml")).Returns(content);
-            var testee = new FileExtractor(rootDirectory, zip.Object);
+            var testee = new FileExtractor();
 
-            var result = (await testee.ExtractFiles(manifestItems)).Single();
+            var result = (await testee.ExtractFiles(opf, manifestItems, zip.Object)).Single();
 
             Assert.AreEqual(content, result.Content);
             Assert.AreEqual("chapter1.xml", result.Name);
