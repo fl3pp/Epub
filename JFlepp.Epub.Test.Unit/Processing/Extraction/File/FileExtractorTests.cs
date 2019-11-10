@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JFlepp.Epub.Test.Unit.Processing.Extraction.File
+namespace JFlepp.Epub.Test.Unit.Processing
 {
     [TestClass]
     public class FileExtractorTests

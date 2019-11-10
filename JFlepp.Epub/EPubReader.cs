@@ -16,7 +16,7 @@ namespace JFlepp.Epub
             return new EpubFactory(
                 new IOCompressionZipReader(),
                 new EpubStructureFactory(
-                    new OpfPathExtractor(), manifestExtractor),
+                    new OpfPathExtractor()),
                 new ModelBuilderFactory(
                     manifestExtractor,
                     new MetaExtractor(),

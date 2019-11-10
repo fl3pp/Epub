@@ -16,16 +16,12 @@ namespace JFlepp.Epub.Processing
     internal sealed class EpubStructureFactory : IEpubStructureFactory
     {
         private readonly IOpfPathExtractor opfPathExtractor;
-        private readonly IManifestExtractor manifestExtractor;
 
         private const string containerXmlPath = "META-INF/container.xml";
 
-        public EpubStructureFactory(
-            IOpfPathExtractor opfPathExtractor,
-            IManifestExtractor manifestExtractor)
+        public EpubStructureFactory(IOpfPathExtractor opfPathExtractor)
         {
             this.opfPathExtractor = opfPathExtractor;
-            this.manifestExtractor = manifestExtractor;
         }
 
         public async Task<EpubStructure> CreateStructureAsync(IZip zip)

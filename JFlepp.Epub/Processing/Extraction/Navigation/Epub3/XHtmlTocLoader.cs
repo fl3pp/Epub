@@ -12,7 +12,6 @@ namespace JFlepp.Epub.Processing
             IEnumerable<ManifestItem> manifestItems, string relativeFilePathsAnchor, IEnumerable<File> files);
     }
 
-
     internal sealed class XHtmlTocLoader : IXHtmlTocLoader
     {
         public Task<XmlStructureFile> LoadXHtmlToc(
